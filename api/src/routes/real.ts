@@ -12,7 +12,28 @@ realRouter.get('/students', async (req, res) => {
       house: character.house,
       alternate_names: character.alternate_names,
     }));
-    res.json(students);
+
+    const house = req.query.house as string;
+    let filteredStudents = students;
+
+    if (house) {
+      filteredStudents = students.filter((student: { house: string; }) => student.house === house);
+    }
+
+    // Pagination logic
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const limit = 10; // Number of students per page
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const paginatedStudents = filteredStudents.slice(startIndex, endIndex);
+
+    res.json({
+      page,
+      totalPages: Math.ceil(filteredStudents.length / limit),
+      totalStudents: filteredStudents.length,
+      students: paginatedStudents
+    });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch students' });
   }
