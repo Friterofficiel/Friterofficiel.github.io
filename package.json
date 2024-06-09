@@ -6,7 +6,7 @@
     "start": "node ./dist/index.js",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "vercel-build": "tsc && node ./dist/index.js"
+    "vercel-build": "tsc && tsx watch src/index.ts"
   },
   "dependencies": {
     "axios": "^1.7.2",
