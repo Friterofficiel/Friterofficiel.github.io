@@ -59,5 +59,5 @@ realRouter.get('/randomstudent', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch students' });
   }
 });
-
+app.use('/.netlify/functions/real', router); 
 export default realRouter;

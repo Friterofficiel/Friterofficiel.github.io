@@ -33,5 +33,5 @@ dummyRouter.get('/students', function (req, res, next) {
     },
   ]);
 });
-
+app.use('/.netlify/functions/dummy', router); 
 export default dummyRouter;
