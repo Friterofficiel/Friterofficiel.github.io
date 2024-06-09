@@ -5,6 +5,14 @@ const serverless = require('serverless-http');
 const app = express();
 const router = express.Router();
 
+// Middleware pour ajouter les en-têtes CORS
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 router.get('/students', async (req, res) => {
   try {
     const response = await axios.get('https://harry-potter-api-3a23c827ee69.herokuapp.com/api/characters');
