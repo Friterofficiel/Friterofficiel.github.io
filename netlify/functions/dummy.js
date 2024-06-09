@@ -1,15 +1,18 @@
-import express from 'express';
-const dummyRouter = express.Router();
+const express = require('express');
+const serverless = require('serverless-http');
 
-dummyRouter.get('/', function (req, res, next) {
+const app = express();
+const router = express.Router();
+
+router.get('/', function (req, res, next) {
   res.send('This is dummy route');
 });
 
-dummyRouter.get('/student', function (req, res, next) {
+router.get('/student', function (req, res, next) {
   res.send('Harry Potter !');
 });
 
-dummyRouter.get('/students', function (req, res, next) {
+router.get('/students', function (req, res, next) {
   res.json([
     {
       name: 'Harry Potter',
@@ -33,5 +36,7 @@ dummyRouter.get('/students', function (req, res, next) {
     },
   ]);
 });
-app.use('/.netlify/functions/dummy', router); 
-export default dummyRouter;
+
+app.use('/.netlify/functions/dummy', router);
+
+module.exports.handler = serverless(app);

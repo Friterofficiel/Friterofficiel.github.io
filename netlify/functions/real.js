@@ -1,9 +1,11 @@
-import express from 'express';
-import axios from 'axios';
+const express = require('express');
+const axios = require('axios');
+const serverless = require('serverless-http');
 
-const realRouter = express.Router();
+const app = express();
+const router = express.Router();
 
-realRouter.get('/students', async (req, res) => {
+router.get('/students', async (req, res) => {
   try {
     const response = await axios.get('https://harry-potter-api-3a23c827ee69.herokuapp.com/api/characters');
     const students = response.data.map((character) => ({
@@ -39,7 +41,7 @@ realRouter.get('/students', async (req, res) => {
   }
 });
 
-realRouter.get('/randomstudent', async (req, res) => {
+router.get('/randomstudent', async (req, res) => {
   try {
     const response = await axios.get('https://harry-potter-api-3a23c827ee69.herokuapp.com/api/characters');
     const students = response.data.map((character) => ({
@@ -59,5 +61,7 @@ realRouter.get('/randomstudent', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch students' });
   }
 });
-app.use('/.netlify/functions/real', router); 
-export default realRouter;
+
+app.use('/.netlify/functions/real', router);
+
+module.exports.handler = serverless(app);

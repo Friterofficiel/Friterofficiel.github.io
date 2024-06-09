@@ -1,9 +1,14 @@
-import express from 'express';
-const usersRouter = express.Router();
+const express = require('express');
+const serverless = require('serverless-http');
+
+const app = express();
+const router = express.Router();
 
 /* GET users listing. */
-usersRouter.get('/', function (req, res, next) {
+router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
-export default usersRouter;
+app.use('/.netlify/functions/users', router);
+
+module.exports.handler = serverless(app);
