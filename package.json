@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "dev": "tsc watch src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "vercel-build": "tsc && node ./dist/index.js"
   },
   "dependencies": {
     "axios": "^1.7.2",
